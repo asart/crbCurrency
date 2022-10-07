@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Application\Dto\ExchangeDto;
+use App\Application\Services\ExchangeService;
 use App\Infrastructure\Helpers\Validator;
-use DateTime;
+use DateTimeImmutable;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ExchangeController extends AbstractController
+final class ExchangeController extends AbstractController
 {
     use Validator;
 
@@ -27,11 +30,11 @@ class ExchangeController extends AbstractController
     }
 
     #[Route('/v1/exchange', name: 'exchange_rates', methods: ['GET'])]
-    public function exchange(Request $request): JsonResponse
+    public function exchange(Request $request, ExchangeService $exchangeService): JsonResponse
     {
         try {
             $dto = new ExchangeDto(
-                date: DateTime::createFromFormat('Y-m-d', $request->get('date')),
+                date: DateTimeImmutable::createFromFormat('Y-m-d', $request->get('date')),
                 quoteCurrency: $request->get('quoteCurrency'),
                 baseCurrency: $request->get('baseCurrency', ExchangeDto::DEFAULT_CURRENCY)
             );
@@ -41,7 +44,8 @@ class ExchangeController extends AbstractController
                 return $this->json($this->createJsonResponseFromViolations($violations), 400);
             }
 
-            return $this->json([$dto->date]);
+            $result = $exchangeService->getExchangeCurrency($dto);
+            return $this->json($result);
         } catch (Exception $exception) {
             return $this->json(['error' => $exception->getMessage()], 422);
         }

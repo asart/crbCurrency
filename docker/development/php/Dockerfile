@@ -5,12 +5,14 @@ RUN apt-get update && apt-get -y --no-install-recommends install  \
     libpq-dev \
     libzip-dev \
     libicu-dev \
+    libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # php ext
 RUN docker-php-ext-configure intl && docker-php-ext-install \
     zip \
-    intl
+    intl \
+    soap
 
 # xdebug
 RUN pecl install xdebug

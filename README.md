@@ -1,4 +1,6 @@
 # Quick Start
+Кеширование производим через настройки php.ini для soap
+docker/development/php/php.ini
 
 1. docker-compose up -d
 2. http://127.0.0.1:8082
