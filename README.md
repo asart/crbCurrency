@@ -13,3 +13,19 @@
 5. Нажмите `Listen for PHP debug connections`;
 
 Дополнительная информация [documentation](https://www.jetbrains.com/help/phpstorm/debugging-with-phpstorm-ultimate-guide.html).
+
+### TESTING
+  - выполнить тесты
+      ```
+      ЗАПУСТИТЬ ВСЕ ТЕСТЫ
+      php ./vendor/bin/phpunit --debug --testdox 
+  
+      ЗАПУСТИТЬ UNIT
+      php ./vendor/bin/phpunit --debug --testdox --testsuite unit
+  
+      ЗАПУСТИТЬ Functional
+      php ./vendor/bin/phpunit --debug --testdox --testsuite functional
+  
+      ЗАПУСТИТЬ ВЫБОРОЧНЫЙ ТЕСТ
+      php ./vendor/bin/phpunit --debug --testdox tests/Functional/Api/SomeTest.php
+      ```
