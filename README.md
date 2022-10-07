@@ -1,9 +1,19 @@
 ## Quick Start
-Кеширование производим через настройки php.ini для soap
+Кеширование производим через настройки php.ini для soap находится по пути 
+```
 docker/development/php/php.ini
+```
 
+Пример запроса:
+```
+curl --location --request GET 'http://127.0.0.1:8082/v1/exchange?date=2022-10-05&quoteCurrency=USD&baseCurrency=AUD'
+```
+
+Для разворачивания окружения выполнить
+```
 1. docker-compose up -d
 2. http://127.0.0.1:8082
+```
 
 ## Configuring Xdebug settings for PhpStorm IDE
 
