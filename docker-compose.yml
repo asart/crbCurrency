@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  rbc-nginx:
+    image: nginx:1.18
+    volumes:
+      - ./:/var/www/app
+      - ./docker/development/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - rbc-php-fpm
+    networks:
+      - internal
+    ports:
+      - "8082:80"
+  rbc-php-fpm:
+    build:
+      context: docker/development/php
+    container_name: rbc-php-fpm
+    volumes:
+      - ./:/var/www/app
+      - ./docker/development/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/development/php/php-fpm.conf:/usr/local/etc/php-fpm.d/zz.conf
+      - ./docker/development/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    working_dir: /var/www/app
+    environment:
+      XDEBUG_CONFIG: "client_host=172.0.5.0 idekey=PHPSTORM client_port=9003"
+      PHP_IDE_CONFIG: "serverName=coffee_catalog"
+      XDEBUG_MODE: "develop,debug"
+    networks:
+      - internal
+networks:
+  internal:
+    ipam:
+      config:
+        - subnet: 172.0.5.0/24
