@@ -1,4 +1,4 @@
-# Quick Start
+## Quick Start
 Кеширование производим через настройки php.ini для soap
 docker/development/php/php.ini
 
@@ -16,18 +16,12 @@ docker/development/php/php.ini
 
 Дополнительная информация [documentation](https://www.jetbrains.com/help/phpstorm/debugging-with-phpstorm-ultimate-guide.html).
 
-### TESTING
+## Testing
   - выполнить тесты
       ```
       ЗАПУСТИТЬ ВСЕ ТЕСТЫ
-      php ./vendor/bin/phpunit --debug --testdox 
-  
-      ЗАПУСТИТЬ UNIT
-      php ./vendor/bin/phpunit --debug --testdox --testsuite unit
+      php ./vendor/bin/phpunit --debug --testdox
   
       ЗАПУСТИТЬ Functional
       php ./vendor/bin/phpunit --debug --testdox --testsuite functional
-  
-      ЗАПУСТИТЬ ВЫБОРОЧНЫЙ ТЕСТ
-      php ./vendor/bin/phpunit --debug --testdox tests/Functional/Api/SomeTest.php
       ```
